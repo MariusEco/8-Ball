@@ -1,6 +1,5 @@
-# 8-Ball
-Un joc realizat în limbajul C++ folosind librăria grafică SFML care implementează variația biliardului numită ”Eight-Ball”, aceasta fiind cea mai des jucată variație a biliardului.
-Jocul preia inspirație din faimosul joc ”8 Ball Pool”.
+# Hangman
+Jocul Hangman(Spânzurătoarea) implementat în limbajul C++, însă cu noi idei menite să îmbunătățească jocul tradițional și să îl facă mai captivant.
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
 Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
