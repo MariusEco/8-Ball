@@ -105,22 +105,19 @@ public:
            << " MAX_TRIES: " << game.MAX_TRIES;
         return os;
     }
-    static bool not_letter(char &letter){
-        if(letter>'a' && letter<'z')
+    static bool not_letter(const char letter) {
+        if ((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')) {
             return true;
-        else
-        if(letter>'A' && letter<'Z') {
-            tolower(letter);
-            return true;
-        }
-        return false;
-    };
+        } else
+            return false;
+    }
+
     void joc(){
         std::string secret= random.getRandomWord();
-        std::string word_to_guess(secret.length(),'_');
+        //std::string word_to_guess(secret.length(),'_');
 
-        int tries=0;
-        while (tries<MAX_TRIES){
+        int  tries = 0;
+        while (tries < MAX_TRIES){
             //facem display la word_to_guess cu functie din UI
             //tastam litera pe care vrem sa o ghicim
             //daca e buna il punem in word_to_guess
@@ -155,5 +152,6 @@ int main()
     std::cout<<scoreboard<<"\n";
     HangmanGame joc(scoreboard,ui,player1,word);
     std::cout<<joc<<"\n";
+    std::cout<<HangmanGame::not_letter('9')<<"\n";
     return 0;
 }
