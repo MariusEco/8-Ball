@@ -112,8 +112,8 @@ public:
             return false;
     }
 
-    void joc() const{
-        //std::string secret= random.getRandomWord();
+    void joc(){
+        std::string secret= random.getRandomWord();
         //std::string word_to_guess(secret.length(),'_');
 
         int  tries = 0;
