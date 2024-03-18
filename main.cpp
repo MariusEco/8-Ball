@@ -4,6 +4,7 @@
 #include <Helper.h>
 
 int main() {
+    std::cout<<"Modificare test";
     std::cout << "Hello, world!\n";
     std::array<int, 100> v{};
     int nr;
