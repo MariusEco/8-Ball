@@ -2,45 +2,38 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-class RandWord{
+
+class RandWord {
 public:
-    RandWord()=default;
-    friend std::ostream &operator<<(std::ostream &os, const RandWord &) {
-        return os;
-    }
-    // functie de alegere a unui cuvant random temporara nu foarte buna
-    // implementare librarie random C++11
-    // citire din fisierul tuturor cuvintelor din limba engleza
+    RandWord() = default;
+
     static std::string getRandomWord() {
-        const std::string wordList[4] = {"test1", "test2", "test3", "test4"};
+        const std::string wordList[4] = {"apple", "banana", "kiwi", "mango"};
         srand(static_cast<unsigned int>(time(nullptr)));
         std::string word = wordList[rand() % 4];
         return word;
     }
 };
-class Player{
+
+class Player {
 private:
     std::string name;
     int score;
 public:
-    Player(const std::string& name, int score) : name(name), score(score) {}
+    Player(const std::string &name, int score) : name(name), score(score) {}
 
-    Player(const Player& other)= default;
+    Player(const Player &other) = default;
 
-    Player& operator=(const Player& other) {
-        name = other.name;
-        score = other.score;
-        return *this;
-    }
+    Player &operator=(const Player &other) = default;
 
-    ~Player()= default;
+    ~Player() = default;
 
     friend std::ostream &operator<<(std::ostream &os, const Player &player) {
         os << "name: " << player.name << " score: " << player.score;
         return os;
     }
 
-    std::string getName() const{
+    const std::string &getName() const {
         return name;
     }
 
@@ -52,21 +45,22 @@ public:
         return score;
     }
 };
-class Scoreboard{
+
+class Scoreboard {
 private:
     std::vector<Player> players;
 public:
     explicit Scoreboard(const std::vector<Player> &players) : players(players) {}
 
     friend std::ostream &operator<<(std::ostream &os, const Scoreboard &scoreboard) {
-        for (const auto& player : scoreboard.players) {
+        for (const auto &player: scoreboard.players) {
             os << player << " ";
         }
         return os;
-
     }
 };
-class UI{
+
+class UI {
 private:
     std::string display;
 public:
@@ -75,29 +69,104 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const UI &ui) {
         os << "display: " << ui.display;
         return os;
-        // functii de afisare
     }
 
+    static void beginGame() {
+        std::cout << "Welcome to the Hangman game!" << "\n";
+        system("pause");
+    };
+
+    static void displayWord(const std::string &word) {
+        std::cout << "Word to guess: " << word << "\n";
+    };
+
+    static void displayMessage(const std::string &message) {
+        std::cout << message << "\n";
+    }
+
+    static void displayTries(int tries) {
+        std::cout << "Tries remaining: " << tries << "\n";
+    }
+
+    static void displayEnd(bool is_winner, const std::string &secret) {
+        if (is_winner)
+            std::cout << "Congratulations! You guessed the word: " << secret << "\n";
+        else std::cout << "Sorry, you ran out of tries. The word was: " << secret << "\n";
+    }
 };
-class HangmanGame{
+
+class HangmanGame {
 private:
     Scoreboard scoreboard;
     UI ui;
     Player player;
-    RandWord random;
     int incorrectGuesses;
     std::string guessedLetters;
     const int MAX_TRIES;
 public:
-    HangmanGame(const Scoreboard &scoreboard, const UI &ui, const Player &player, const RandWord &random,
-                int incorrectGuesses=0, const std::string &guessedLetters="", const int maxTries=6) : scoreboard(scoreboard),
-                                                                                                      ui(ui), player(player),
-                                                                                                      random(random),
-                                                                                                      incorrectGuesses(
-                                                                                                              incorrectGuesses),
-                                                                                                      guessedLetters(
-                                                                                                              guessedLetters),
-                                                                                                      MAX_TRIES(maxTries) {}
+    HangmanGame(const Scoreboard &scoreboard, const UI &ui, const Player &player,
+                int incorrectGuesses = 0, const std::string &guessedLetters = "", const int maxTries = 6) : scoreboard(
+            scoreboard),
+                                                                                                            ui(ui),
+                                                                                                            player(player),
+                                                                                                            incorrectGuesses(
+                                                                                                                    incorrectGuesses),
+                                                                                                            guessedLetters(
+                                                                                                                    guessedLetters),
+                                                                                                            MAX_TRIES(
+                                                                                                                    maxTries) {}
+
+    static bool not_letter(const char& letter) {
+        if ((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')) {
+            return true;
+        } else
+            return false;
+    }
+
+    void game() {
+        std::string secret = RandWord::getRandomWord();
+        std::string word_to_guess(secret.length(), '*');
+        UI::beginGame();
+        while (incorrectGuesses < MAX_TRIES && word_to_guess != secret) {
+
+            UI::displayWord(word_to_guess);
+
+            char letter;
+            std::cout << "Guess a letter: ";
+            std::cin >> letter;
+            if (!not_letter(letter)) {
+                UI::displayMessage("Oops! That is not a valid letter. Try another one!");
+                incorrectGuesses++;
+                UI::displayTries(MAX_TRIES - incorrectGuesses);
+                continue;
+            }
+            if (guessedLetters.find(letter) != std::string::npos) {
+                UI::displayMessage("Oops! You already tried to guess that letter. Try another one!");
+                incorrectGuesses++;
+                UI::displayTries(MAX_TRIES - incorrectGuesses);
+                continue;
+            }
+            guessedLetters += letter;
+            bool search = false;
+            for (int i = 0; i < secret.length(); ++i) {
+                if (secret[i] == letter) {
+                    word_to_guess[i] = letter;
+                    search = true;
+                }
+            }
+
+            if (!search) {
+                incorrectGuesses++;
+                UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
+                                   " is not found in the word. Try another one!");
+                UI::displayTries(MAX_TRIES - incorrectGuesses);
+            }
+
+        }
+        if (word_to_guess == secret)
+            UI::displayEnd(true, secret);
+        else UI::displayEnd(false, secret);
+    };
 
     friend std::ostream &operator<<(std::ostream &os, const HangmanGame &game) {
         os << "scoreboard: " << game.scoreboard << " ui: " << game.ui << " player: " << game.player
@@ -105,53 +174,18 @@ public:
            << " MAX_TRIES: " << game.MAX_TRIES;
         return os;
     }
-    static bool not_letter(const char letter) {
-        if ((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')) {
-            return true;
-        } else
-            return false;
-    }
-
-    void joc(){
-        std::string secret= random.getRandomWord();
-        //std::string word_to_guess(secret.length(),'_');
-
-        int  tries = 0;
-        while (tries < MAX_TRIES){
-            //facem display la word_to_guess cu functie din UI
-            //tastam litera pe care vrem sa o ghicim
-            //daca e buna il punem in word_to_guess
-            //daca nu ++tries sau daca nu este litera se afiseaza un mesaj
-            //daca secret=word_to_guess castigam, else continuam
-            //scoreboard si altele
-        }
-    };
 };
-int main()
-{   RandWord word{};
-    std::cout<<RandWord::getRandomWord()<<"\n";
-    Player player1("David",0);
-    Player player2 = player1;
-    std::cout<<player1<<"\n";
-    std::cout<<player2<<"\n";
-    Player player3("Maria",250);
-    player1=player3;
-    std::cout<<player1<<"\n";
-    player1.increaseScore(50);
-    std::cout<<player1<<"\n";
-    std::cout<<player1.getName()<<"\n";
-    std::cout<<player1.getScore()<<"\n";
-    UI ui("Meniu");
-    std::cout<<ui<<"\n";
+
+int main() {
+    Player player1("David", 0);
     std::vector<Player> players = {
             Player("David", 100),
             Player("Rebecca", 150),
             Player("Marius", 200)
     };
     Scoreboard scoreboard(players);
-    std::cout<<scoreboard<<"\n";
-    HangmanGame joc(scoreboard,ui,player1,word);
-    std::cout<<joc<<"\n";
-    std::cout<<HangmanGame::not_letter('9')<<"\n";
+    UI ui("Menu");
+    HangmanGame game(scoreboard, ui, player1);
+    game.game();
     return 0;
 }
