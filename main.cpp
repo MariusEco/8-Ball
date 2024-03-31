@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include <conio.h>
 
 class RandWord {
 public:
@@ -76,7 +75,7 @@ public:
     static void beginGame() {
         std::cout << "Welcome to the Hangman game!" << "\n";
         std::cout << "Press enter to continue..." << "\n";
-        _getch();
+        std::cin.ignore();
     };
 
     static void displayWord(const std::string &word) {
