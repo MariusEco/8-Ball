@@ -33,17 +33,17 @@ public:
         return os;
     }
 
-    const std::string &getName() const {
-        return name;
-    }
-
-    void increaseScore(int points) {
-        score += points;
-    }
-
-    int getScore() const {
-        return score;
-    }
+//    const std::string &getName() const {
+//        return name;
+//    }
+//
+//    void increaseScore(int points) {
+//        score += points;
+//    }
+//
+//    int getScore() const {
+//        return score;
+//    }
 };
 
 class Scoreboard {
