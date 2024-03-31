@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
+#include <random>
+#include <conio.h>
 
 class RandWord {
 public:
@@ -9,9 +9,11 @@ public:
 
     static std::string getRandomWord() {
         const std::string wordList[4] = {"apple", "banana", "kiwi", "mango"};
-        srand(static_cast<unsigned int>(time(nullptr)));
-        std::string word = wordList[rand() % 4];
-        return word;
+        std::random_device rd;
+        std::mt19937 rng(rd());
+        std::uniform_int_distribution<int> distribution(0, 3);
+        int index = distribution(rng);
+        return wordList[index];
     }
 };
 
@@ -73,7 +75,8 @@ public:
 
     static void beginGame() {
         std::cout << "Welcome to the Hangman game!" << "\n";
-        system("pause");
+        std::cout << "Press enter to continue..." << "\n";
+        _getch();
     };
 
     static void displayWord(const std::string &word) {
@@ -148,7 +151,7 @@ public:
             }
             guessedLetters += letter;
             bool search = false;
-            for (int i = 0; i < secret.length(); ++i) {
+            for (int i = 0; i < int(secret.length()); ++i) {
                 if (secret[i] == letter) {
                     word_to_guess[i] = letter;
                     search = true;
