@@ -3,7 +3,8 @@
 void UI::beginGame() {
     std::cout << "Welcome to the Hangman game!" << "\n";
     std::cout << "Press enter to continue..." << "\n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::string enter;
+    std::getline(std::cin, enter);
 }
 
 void UI::displayWord(const std::string &word) {

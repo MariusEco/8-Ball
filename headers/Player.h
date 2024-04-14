@@ -13,24 +13,16 @@ public:
     explicit Player(const std::string &name = "", int score = 0);
 
     /// \brief Updates the name of the player
-    void setName(const std::string &playerName) {
-        name = playerName;
-    }
+    void setName(const std::string &playerName);
 
     /// \brief Updates the score of the player
-    void setScore(const int playerScore) {
-        score = playerScore;
-    }
+    void setScore(int playerScore);
 
     /// \brief Increases the score of the player
-    void incrementScore() {
-        score += 10;
-    }
+    void incrementScore();
 
     /// \return the score of the player
-    [[nodiscard]] int getScore() const {
-        return score;
-    }
+    [[nodiscard]] int getScore() const;
 
     /// \return the name of the player
     [[nodiscard]] const std::string &getName() const {
