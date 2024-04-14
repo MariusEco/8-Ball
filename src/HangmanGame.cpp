@@ -1,10 +1,11 @@
 #include "../headers/HangmanGame.h"
 #include "../headers/RandWord.h"
 
-HangmanGame::HangmanGame()
-        : highscore(player, 0),
-          incorrectGuesses(0),
-          MAX_TRIES(6) {}
+HangmanGame::HangmanGame(const Highscore &highscore, const Player &player, int incorrectGuesses,
+                         const std::string &guessedLetters, int maxTries) : highscore(highscore), player(player),
+                                                                                  incorrectGuesses(incorrectGuesses),
+                                                                                  guessedLetters(guessedLetters),
+                                                                                  MAX_TRIES(maxTries) {}
 
 std::ostream &operator<<(std::ostream &os, const HangmanGame &game) {
     os << "highscore: " << game.highscore << " player: " << game.player << " incorrectGuesses: "
@@ -51,8 +52,12 @@ void HangmanGame::game() {
 
                 char letter;
                 std::cout << "Guess a letter: ";
-                std::cin.get(letter);
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                /// \brief Restriction for only 1 character input
+                while (!(std::cin >> letter) || std::cin.peek() != '\n') {
+                    std::cout << "Invalid input. Please enter a single letter: ";
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                }
                 if (!HangmanGame::not_letter(letter)) {
                     UI::displayMessage("Oops! That is not a valid letter. Try another one!");
                     incorrectGuesses++;

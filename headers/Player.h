@@ -9,7 +9,8 @@ private:
     std::string name;
     int score;
 public:
-    Player() : score(0) {}
+
+    explicit Player(const std::string &name = "", int score = 0);
 
     /// \brief Updates the name of the player
     void setName(const std::string &playerName) {

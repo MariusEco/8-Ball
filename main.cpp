@@ -1,8 +1,9 @@
-#include <vector>
 #include "headers/HangmanGame.h"
 
 int main() {
-    std::vector<Player> players;
-    HangmanGame game;
+    Player player;
+    Highscore highscore(player, 0);
+    HangmanGame game(highscore, player);
     game.game();
+    return 0;
 }

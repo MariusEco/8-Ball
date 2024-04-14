@@ -102,8 +102,6 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/Player.h
         src/Highscore.cpp
         headers/Highscore.h
-        src/Scoreboard.cpp
-        headers/Scoreboard.h
 )
 
 ###############################################################################

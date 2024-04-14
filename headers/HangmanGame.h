@@ -18,9 +18,11 @@ private:
     /// \brief The maximum number of tries
     const int MAX_TRIES;
 public:
-    HangmanGame();
 
-    /// \brief Decides if a character is a letter
+    HangmanGame(const Highscore &highscore, const Player &player, int incorrectGuesses=0,
+                const std::string &guessedLetters="", int maxTries=6);
+
+/// \brief Decides if a character is a letter
     /// \param letter constant reference to a character
     /// \return true if the character is a letter, false otherwise
     static bool not_letter(const char &letter);
