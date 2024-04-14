@@ -1,9 +1,9 @@
 #include "../headers/Highscore.h"
 
-void Highscore::updateHighscore(const Player &player, int score) {
+void Highscore::updateHighscore(const Player &player1, int score) {
     if (score > highscore) {
         highscore = score;
-        std::cout << "Congratulations, " << player.getName() << "! You have a new highscore: " << highscore << "\n";
+        std::cout << "Congratulations, " << player1.getName() << "! You have a new highscore: " << highscore << "\n";
     }
 }
 
