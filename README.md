@@ -1,5 +1,5 @@
 # Hangman
-Jocul Hangman(Spânzurătoarea) implementat în limbajul C++, însă cu noi idei menite să îmbunătățească jocul tradițional și să îl facă mai captivant.
+Hangman game implemented in C++ language, with several game modes to choose from.
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
 Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
