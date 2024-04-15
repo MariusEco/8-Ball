@@ -29,8 +29,6 @@ public:
         return name;
     }
 
-    friend std::ostream &operator<<(std::ostream &os, const Player &player);
-
 };
 
 #endif

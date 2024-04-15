@@ -18,8 +18,6 @@ public:
 
     /// \brief Displays the current highscore
     void displayHighscore() const;
-
-    friend std::ostream &operator<<(std::ostream &os, const Highscore &highscore);
 };
 
 #endif

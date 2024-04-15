@@ -2,9 +2,6 @@
 
 void UI::beginGame() {
     std::cout << "Welcome to the Hangman game!" << "\n";
-    std::cout << "Press enter to continue..." << "\n";
-    std::string enter;
-    std::getline(std::cin, enter);
 }
 
 void UI::displayWord(const std::string &word) {
@@ -19,10 +16,10 @@ void UI::displayTries(int tries) {
     std::cout << "Tries remaining: " << tries << "\n";
 }
 
-void UI::displayEnd(bool is_winner, const std::string &secret) {
+void UI::displayEnd(bool is_winner, const std::string &secret, Player &player) {
     if (is_winner)
-        std::cout << "Congratulations! You guessed the word: " << secret << "\n";
-    else std::cout << "Sorry, you ran out of tries. The word was: " << secret << "\n";
+        std::cout << "Congratulations " << player.getName() << "! You guessed the word: " << secret << "\n";
+    else std::cout << "Sorry " << player.getName() << ", you ran out of tries. The word was: " << secret << "\n";
 }
 
 void UI::readPlayerName(Player &player) {

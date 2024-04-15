@@ -28,7 +28,7 @@ public:
     /// \brief Displays if the player has won or lost
     /// \param is_winner bool variable that determines the win/lose state
     /// \param secret constant reference to a string object that contains the word that we need to guess
-    static void displayEnd(bool is_winner, const std::string &secret);
+    static void displayEnd(bool is_winner, const std::string &secret, Player &player);
 
     /// \brief Reads the introduced player name and stores it
     /// \param player Player object that stores the name

@@ -12,8 +12,3 @@ void Highscore::displayHighscore() const {
 }
 
 Highscore::Highscore(const Player &player, int highscore) : player(player), highscore(highscore) {}
-
-std::ostream &operator<<(std::ostream &os, const Highscore &highscore) {
-    os << "player: " << highscore.player << " highscore: " << highscore.highscore;
-    return os;
-}

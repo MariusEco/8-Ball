@@ -102,6 +102,14 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/Player.h
         src/Highscore.cpp
         headers/Highscore.h
+        src/HangmanGameWithScores.cpp
+        headers/HangmanGameWithScores.h
+        src/HangmanGameWithTimer.cpp
+        headers/HangmanGameWithTimer.h
+        src/AbstractHangman.cpp
+        headers/AbstractHangman.h
+        src/Exceptions.cpp
+        headers/Exceptions.h
 )
 
 ###############################################################################
