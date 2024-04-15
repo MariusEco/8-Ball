@@ -26,7 +26,7 @@ void HangmanGameWithTimer::game() {
             std::string word_to_guess;
             UI::createDisplayedWord(secret, word_to_guess);
             /// \brief The time the player has to guess the word
-            const int max_time = 5;
+            const int max_time = 90;
             /// \brief Capture the current time using the steady clock from the Chrono library.
             ///  The steady clock provides a stable time source unaffected by system time adjustments,
             ///  making it suitable for precise time measurements.
