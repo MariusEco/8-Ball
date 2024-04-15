@@ -35,7 +35,7 @@ int main() {
             }
             default:
                 std::cout << "Invalid choice! Exiting the program.\n";
-                return 1;
+                return 0;
         }
     } catch (const std::exception& ex) {
         std::cerr << "Exception caught: " << ex.what() << std::endl;

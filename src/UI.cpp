@@ -16,7 +16,7 @@ void UI::displayTries(int tries) {
     std::cout << "Tries remaining: " << tries << "\n";
 }
 
-void UI::displayEnd(bool is_winner, const std::string &secret, Player &player) {
+void UI::displayEnd(bool is_winner, const std::string &secret, const Player &player) {
     if (is_winner)
         std::cout << "Congratulations " << player.getName() << "! You guessed the word: " << secret << "\n";
     else std::cout << "Sorry " << player.getName() << ", you ran out of tries. The word was: " << secret << "\n";

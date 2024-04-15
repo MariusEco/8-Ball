@@ -40,7 +40,7 @@ std::string RandWord::getRandomWord() {
         int index = wordDistribution(rng);
 
         return words[index];
-    } catch (const std::exception &ex) {
+    } catch (const std::exception &) {
         throw;
     }
 }
