@@ -6,9 +6,8 @@ AbstractHangman::AbstractHangman(const Player &player, int incorrectGuesses,
                                                                                     guessedLetters(guessedLetters),
                                                                                     MAX_TRIES(maxTries) {}
 
-
 bool AbstractHangman::not_letter(const char &letter) {
-    if ((letter >= 'a' && letter <= 'z') || (letter >= 'A' && letter <= 'Z')) {
+    if (std::isalpha(letter)) {
         return true;
     } else
         return false;

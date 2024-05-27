@@ -5,10 +5,11 @@
 #include "../headers/HangmanGameWithScores.h"
 
 HangmanGameWithTimer::HangmanGameWithTimer(std::shared_ptr<AbstractHangman> ptr, const Player &player,
+                                           GameStatistics<int> &gamesPlayed,
                                            int incorrectGuesses,
                                            const std::string &guessedLetters, int maxTries)
         : AbstractHangman(player, incorrectGuesses, guessedLetters, maxTries),
-          ptr(std::move(ptr)) {}
+          ptr(std::move(ptr)), gamesPlayed(gamesPlayed) {}
 
 void HangmanGameWithTimer::game() {
     auto gamePtr = std::dynamic_pointer_cast<HangmanGameWithScores>(ptr);
@@ -16,6 +17,7 @@ void HangmanGameWithTimer::game() {
     UI::readPlayerName(player);
     bool play = true;
     while (play) {
+        gamesPlayed.incrementStat(1);
         player.setScore(0);
         while (true) {
             guessedLetters = "";

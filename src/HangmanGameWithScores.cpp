@@ -2,11 +2,13 @@
 #include "../headers/RandWord.h"
 #include "../headers/UI.h"
 
-HangmanGameWithScores::HangmanGameWithScores(const Highscore &highscore, const Player &player, int incorrectGuesses,
+HangmanGameWithScores::HangmanGameWithScores(const Highscore &highscore, const Player &player,
+                                             GameStatistics<int> &gamesPlayed,
+                                             int incorrectGuesses,
                                              const std::string &guessedLetters, int maxTries
 ) : AbstractHangman(player, incorrectGuesses,
                     guessedLetters, maxTries),
-    highscore(highscore) {}
+    highscore(highscore), gamesPlayed(gamesPlayed) {}
 
 Highscore *HangmanGameWithScores::getHighscore() const {
     return const_cast<Highscore *>(&highscore);
@@ -15,8 +17,10 @@ Highscore *HangmanGameWithScores::getHighscore() const {
 void HangmanGameWithScores::game() {
     UI::beginGame();
     UI::readPlayerName(player);
+
     bool play = true;
     while (play) {
+        gamesPlayed.incrementStat(1);
         player.setScore(0);
         while (true) {
             guessedLetters = "";

@@ -110,6 +110,7 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/AbstractHangman.h
         src/Exceptions.cpp
         headers/Exceptions.h
+        headers/GameStatistics.h
 )
 
 ###############################################################################
