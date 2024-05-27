@@ -8,8 +8,10 @@ HangmanGame::HangmanGame(const Player &player, int incorrectGuesses, const std::
 void HangmanGame::game() {
     UI::beginGame();
     UI::readPlayerName(player);
-    /// \brief The word that we have to guess
-    std::string secret = RandWord::getRandomWord();
+    /// \brief The word that we have to guess and the category which it belongs to
+    std::pair<std::string, std::string> secretAndCategory = RandWord::getRandomWord();
+    std::string secret = secretAndCategory.first;
+    std::string category = secretAndCategory.second;
     /// \brief A simple terminal display of the word we have to guess
     std::string word_to_guess;
     UI::createDisplayedWord(secret, word_to_guess);
@@ -46,6 +48,9 @@ void HangmanGame::game() {
             UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
                                " is not found in the word. Try another one!");
             UI::displayTries(MAX_TRIES - incorrectGuesses);
+
+            if (MAX_TRIES - incorrectGuesses == 4)
+                UI::displayMessage("Hint: The word is from the category: " + category);
         }
 
     }

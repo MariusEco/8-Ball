@@ -20,8 +20,10 @@ void HangmanGameWithTimer::game() {
         while (true) {
             guessedLetters = "";
             incorrectGuesses = 0;
-            /// \brief The word that we have to guess
-            std::string secret = RandWord::getRandomWord();
+            /// \brief The word that we have to guess and the category which it belongs to
+            std::pair<std::string, std::string> secretAndCategory = RandWord::getRandomWord();
+            std::string secret = secretAndCategory.first;
+            std::string category = secretAndCategory.second;
             /// \brief A simple terminal display of the word we have to guess
             std::string word_to_guess;
             UI::createDisplayedWord(secret, word_to_guess);
@@ -34,7 +36,8 @@ void HangmanGameWithTimer::game() {
             auto start_time = std::chrono::steady_clock::now();
             /// \brief The remaining time the player has to guess the word
             int remaining_time = max_time;
-            bool ok=true;
+            /// \brief Bool variable that tracks if the time to guess has expired
+            bool ok = true;
             /// \brief Condition for the game to continue
             while (incorrectGuesses < MAX_TRIES && word_to_guess != secret) {
                 std::cout << "Time remaining: " << remaining_time << " seconds\n";
@@ -57,7 +60,7 @@ void HangmanGameWithTimer::game() {
                 remaining_time = static_cast<int>(max_time - elapsed_seconds);
                 if (elapsed_seconds >= max_time) {
                     UI::displayMessage("Time's up! You didn't guess the word in time.\n The word was " + secret + ".");
-                    ok=false;
+                    ok = false;
                     break;
                 }
 
@@ -81,9 +84,12 @@ void HangmanGameWithTimer::game() {
                     UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
                                        " is not found in the word. Try another one!");
                     UI::displayTries(MAX_TRIES - incorrectGuesses);
+
+                    if (MAX_TRIES - incorrectGuesses == 4)
+                        UI::displayMessage("Hint: The word is from the category: " + category);
                 }
             }
-            if(!ok)
+            if (!ok)
                 break;
             if (word_to_guess == secret) {
                 UI::displayEnd(true, secret, player);

@@ -10,7 +10,7 @@ public:
 
     /// \brief Selects a random word from a list
     /// \return a random word
-    static std::string getRandomWord();
+    static std::pair<std::string, std::string> getRandomWord();
 };
 
 #endif

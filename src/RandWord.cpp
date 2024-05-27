@@ -2,10 +2,12 @@
 #include "../headers/RandWord.h"
 #include "../headers/Exceptions.h"
 
-std::string RandWord::getRandomWord() {
+std::pair<std::string, std::string> RandWord::getRandomWord() {
     try {
         /// \brief Vector that includes all the files
-        std::vector<std::string> fileNames = { "sports.txt"};
+//        std::vector<std::string> fileNames = {"sports.txt", "animals.txt", "clothes.txt", "fruits.txt",
+//                                              "home_objects.txt", "jobs.txt", "transport.txt"};
+        std::vector<std::string> fileNames = {"testing.txt"};
 
         std::random_device rd;
         std::mt19937 rng(rd());
@@ -41,7 +43,13 @@ std::string RandWord::getRandomWord() {
 
         std::uniform_int_distribution<int> wordDistribution(0, static_cast<int>(words.size()) - 1);
         int index = wordDistribution(rng);
-        return words[index];
+
+        /// \brief Removing the file extension from the name
+        auto dot = chosenFileName.find_last_of('.');
+        if (dot != std::string::npos)
+            chosenFileName = chosenFileName.substr(0, dot);
+
+        return {words[index], chosenFileName};
     } catch (const std::exception &) {
         throw;
     }

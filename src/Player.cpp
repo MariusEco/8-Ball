@@ -14,6 +14,10 @@ void Player::incrementScore() {
     score += 10;
 }
 
-[[nodiscard]] int Player::getScore() const {
+int Player::getScore() const {
     return score;
+}
+
+const std::string &Player::getName() const {
+    return name;
 }

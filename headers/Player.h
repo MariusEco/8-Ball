@@ -25,9 +25,7 @@ public:
     [[nodiscard]] int getScore() const;
 
     /// \return the name of the player
-    [[nodiscard]] const std::string &getName() const {
-        return name;
-    }
+    [[nodiscard]] const std::string &getName() const;
 
 };
 

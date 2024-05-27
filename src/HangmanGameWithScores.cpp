@@ -5,11 +5,11 @@
 HangmanGameWithScores::HangmanGameWithScores(const Highscore &highscore, const Player &player, int incorrectGuesses,
                                              const std::string &guessedLetters, int maxTries
 ) : AbstractHangman(player, incorrectGuesses,
-                guessedLetters, maxTries),
+                    guessedLetters, maxTries),
     highscore(highscore) {}
 
-Highscore* HangmanGameWithScores::getHighscore() const{
-    return const_cast<Highscore*>(&highscore);
+Highscore *HangmanGameWithScores::getHighscore() const {
+    return const_cast<Highscore *>(&highscore);
 }
 
 void HangmanGameWithScores::game() {
@@ -21,8 +21,12 @@ void HangmanGameWithScores::game() {
         while (true) {
             guessedLetters = "";
             incorrectGuesses = 0;
+
+            std::pair<std::string, std::string> secretAndCategory = RandWord::getRandomWord();
             /// \brief The word that we have to guess
-            std::string secret = RandWord::getRandomWord();
+            std::string secret = secretAndCategory.first;
+            /// \brief The category which the word that we have to guess belongs to
+            std::string category = secretAndCategory.second;
             /// \brief A simple terminal display of the word we have to guess
             std::string word_to_guess;
             UI::createDisplayedWord(secret, word_to_guess);
@@ -59,6 +63,9 @@ void HangmanGameWithScores::game() {
                     UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
                                        " is not found in the word. Try another one!");
                     UI::displayTries(MAX_TRIES - incorrectGuesses);
+
+                    if (MAX_TRIES - incorrectGuesses == 4)
+                        UI::displayMessage("Hint: The word is from the category: " + category);
                 }
 
             }

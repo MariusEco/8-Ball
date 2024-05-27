@@ -19,4 +19,4 @@ public:
     explicit InvalidWordsException(const std::string& msg);
 };
 
-#endif // OOP_EXCEPTIONS_H
+#endif
