@@ -2,7 +2,7 @@
 #include "../headers/RandWord.h"
 
 HangmanGame::HangmanGame(const Player &player, int incorrectGuesses, const std::string &guessedLetters, int maxTries)
-        : AbstractHangman(player, incorrectGuesses, guessedLetters, maxTries) {}
+        : HangmanStrategy(player, incorrectGuesses, guessedLetters, maxTries) {}
 
 
 void HangmanGame::game() {
@@ -28,7 +28,7 @@ void HangmanGame::game() {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        if (!AbstractHangman::not_letter(letter)) {
+        if (!HangmanStrategy::not_letter(letter)) {
             UI::displayMessage("Oops! That is not a valid letter. Try another one!");
             incorrectGuesses++;
             UI::displayTries(MAX_TRIES - incorrectGuesses);
@@ -42,7 +42,7 @@ void HangmanGame::game() {
         }
 
         guessedLetters += letter;
-        bool search = AbstractHangman::addLetters(secret, letter, word_to_guess);
+        bool search = HangmanStrategy::addLetters(secret, letter, word_to_guess);
         if (!search) {
             incorrectGuesses++;
             UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +

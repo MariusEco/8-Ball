@@ -13,6 +13,7 @@ private:
     T statValue;
 public:
     GameStatistics(const std::string &name, const T &value) : statName(name), statValue(value) {}
+
     /// \brief Displays the statistic with it's current name and value
     void displayStatistic() const {
         std::cout << statName << " = " << statValue << "\n";

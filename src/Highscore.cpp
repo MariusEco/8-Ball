@@ -12,3 +12,11 @@ void Highscore::displayHighscore() const {
 }
 
 Highscore::Highscore(const Player &player, int highscore) : player(player), highscore(highscore) {}
+
+Highscore* Highscore::instance = nullptr;
+Highscore* Highscore::getInstance(const Player &player, int highscore) {
+    if (instance == nullptr) {
+        instance = new Highscore(player, highscore);
+    }
+    return instance;
+}

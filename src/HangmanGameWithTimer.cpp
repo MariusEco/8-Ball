@@ -4,17 +4,17 @@
 #include "../headers/UI.h"
 #include "../headers/HangmanGameWithScores.h"
 
-HangmanGameWithTimer::HangmanGameWithTimer(std::shared_ptr<AbstractHangman> ptr, const Player &player,
+HangmanGameWithTimer::HangmanGameWithTimer(const Player &player,
                                            GameStatistics<int> &gamesPlayed,
                                            int incorrectGuesses,
                                            const std::string &guessedLetters, int maxTries)
-        : AbstractHangman(player, incorrectGuesses, guessedLetters, maxTries),
-          ptr(std::move(ptr)), gamesPlayed(gamesPlayed) {}
+        : HangmanStrategy(player, incorrectGuesses, guessedLetters, maxTries),
+          gamesPlayed(gamesPlayed) {}
 
 void HangmanGameWithTimer::game() {
-    auto gamePtr = std::dynamic_pointer_cast<HangmanGameWithScores>(ptr);
     UI::beginGame();
     UI::readPlayerName(player);
+    Highscore *highscore = Highscore::getInstance(player, 0);
     bool play = true;
     while (play) {
         gamesPlayed.incrementStat(1);
@@ -66,7 +66,7 @@ void HangmanGameWithTimer::game() {
                     break;
                 }
 
-                if (!AbstractHangman::not_letter(letter)) {
+                if (!HangmanStrategy::not_letter(letter)) {
                     UI::displayMessage("Oops! That is not a valid letter. Try another one!");
                     incorrectGuesses++;
                     UI::displayTries(MAX_TRIES - incorrectGuesses);
@@ -80,7 +80,7 @@ void HangmanGameWithTimer::game() {
                 }
 
                 guessedLetters += letter;
-                bool search = AbstractHangman::addLetters(secret, letter, word_to_guess);
+                bool search = HangmanStrategy::addLetters(secret, letter, word_to_guess);
                 if (!search) {
                     incorrectGuesses++;
                     UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
@@ -97,16 +97,16 @@ void HangmanGameWithTimer::game() {
                 UI::displayEnd(true, secret, player);
                 player.incrementScore();
                 std::cout << "Current score: " << player.getScore() << "\n";
-                gamePtr->getHighscore()->displayHighscore();
+                highscore->displayHighscore();
             } else {
                 UI::displayEnd(false, secret, player);
                 std::cout << "Final score: " << player.getScore() << "\n";
-                gamePtr->getHighscore()->displayHighscore();
+                highscore->displayHighscore();
                 break;
             }
         }
         int score = player.getScore();
-        gamePtr->getHighscore()->updateHighscore(player, score);
+        highscore->updateHighscore(player, score);
         std::string answer;
         std::cout << "Do you want to play again? (Y/N): ";
         std::cin >> answer;

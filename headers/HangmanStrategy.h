@@ -1,10 +1,11 @@
-#ifndef OOP_ABSTRACTHANGMAN_H
-#define OOP_ABSTRACTHANGMAN_H
+#ifndef OOP_HANGMANSTRATEGY_H
+#define OOP_HANGMANSTRATEGY_H
 
 #include <ostream>
 #include "Player.h"
+#include "GameStatistics.h"
 
-class AbstractHangman {
+class HangmanStrategy {
 protected:
     Player player;
     /// \brief Number of incorrect guesses
@@ -15,7 +16,7 @@ protected:
     const int MAX_TRIES;
 public:
 
-    explicit AbstractHangman(const Player &player, int incorrectGuesses = 0,
+    explicit HangmanStrategy(const Player &player, int incorrectGuesses = 0,
                              const std::string &guessedLetters = "", int maxTries = 6);
 
     /// \brief Decides if a character is a letter
@@ -33,7 +34,7 @@ public:
     /// \brief Main game function that runs the proper game code
     virtual void game() = 0;
 
-    virtual ~AbstractHangman() = default;
+    virtual ~HangmanStrategy() = default;
 
 };
 

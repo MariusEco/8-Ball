@@ -4,6 +4,7 @@
 #include <iostream>
 #include "headers/Exceptions.h"
 #include "headers/GameStatistics.h"
+#include "headers/HangmanContext.h"
 
 int main() {
     GameStatistics<int> gamesPlayed("Games Played", 0);
@@ -21,31 +22,32 @@ int main() {
 
         auto start = std::chrono::steady_clock::now();
 
+        HangmanContext context;
         switch (choice) {
             case 1: {
-                HangmanGame game(player);
-                game.game();
+                std::unique_ptr<HangmanStrategy> classicStrategy = std::make_unique<HangmanGame>(player);
+                context.setStrategy(std::move(classicStrategy));
                 gamesPlayed.incrementStat(1);
                 break;
             }
             case 2: {
-                Highscore highscore(player, 0);
-                HangmanGameWithScores gameWithScores(highscore, player, gamesPlayed);
-                gameWithScores.game();
+                std::unique_ptr<HangmanStrategy> scoresStrategy = std::make_unique<HangmanGameWithScores>(player,
+                                                                                                          gamesPlayed);
+                context.setStrategy(std::move(scoresStrategy));
                 break;
             }
             case 3: {
-                Highscore highscore(player, 0);
-                std::shared_ptr<AbstractHangman> ptr = std::make_shared<HangmanGameWithScores>(highscore, player,
-                                                                                               gamesPlayed);
-                HangmanGameWithTimer gameWithTimer(ptr, player, gamesPlayed);
-                gameWithTimer.game();
+                std::unique_ptr<HangmanStrategy> timerStrategy = std::make_unique<HangmanGameWithTimer>(player,
+                                                                                                        gamesPlayed);
+                context.setStrategy(std::move(timerStrategy));
                 break;
             }
             default:
                 std::cout << "Invalid choice! Exiting the program.\n";
                 return 0;
         }
+
+        context.executeGame();
 
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed = end - start;

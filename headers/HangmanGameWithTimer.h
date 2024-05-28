@@ -4,16 +4,17 @@
 #include <memory>
 #include <chrono>
 #include <ostream>
-#include "AbstractHangman.h"
+#include "HangmanStrategy.h"
 #include "GameStatistics.h"
+#include "Highscore.h"
 
-class HangmanGameWithTimer : public AbstractHangman {
+class HangmanGameWithTimer : public HangmanStrategy {
 private:
-    std::shared_ptr<AbstractHangman> ptr;
+
     GameStatistics<int> &gamesPlayed;
 
 public:
-    HangmanGameWithTimer(std::shared_ptr<AbstractHangman> ptr, const Player &player, GameStatistics<int> &gamesPlayed,
+    HangmanGameWithTimer(const Player &player, GameStatistics<int> &gamesPlayed,
                          int incorrectGuesses = 0,
                          const std::string &guessedLetters = "", int maxTries = 6);
 

@@ -106,11 +106,13 @@ add_executable(${PROJECT_NAME} main.cpp
         headers/HangmanGameWithScores.h
         src/HangmanGameWithTimer.cpp
         headers/HangmanGameWithTimer.h
-        src/AbstractHangman.cpp
-        headers/AbstractHangman.h
+        src/HangmanStrategy.cpp
+        headers/HangmanStrategy.h
         src/Exceptions.cpp
         headers/Exceptions.h
         headers/GameStatistics.h
+        src/HangmanContext.cpp
+        headers/HangmanContext.h
 )
 
 ###############################################################################

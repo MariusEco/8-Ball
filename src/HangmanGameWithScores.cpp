@@ -2,22 +2,20 @@
 #include "../headers/RandWord.h"
 #include "../headers/UI.h"
 
-HangmanGameWithScores::HangmanGameWithScores(const Highscore &highscore, const Player &player,
+HangmanGameWithScores::HangmanGameWithScores(const Player &player,
                                              GameStatistics<int> &gamesPlayed,
                                              int incorrectGuesses,
-                                             const std::string &guessedLetters, int maxTries
-) : AbstractHangman(player, incorrectGuesses,
-                    guessedLetters, maxTries),
-    highscore(highscore), gamesPlayed(gamesPlayed) {}
-
-Highscore *HangmanGameWithScores::getHighscore() const {
-    return const_cast<Highscore *>(&highscore);
-}
+                                             const std::string &guessedLetters, int maxTries) : HangmanStrategy(player,
+                                                                                                                incorrectGuesses,
+                                                                                                                guessedLetters,
+                                                                                                                maxTries),
+                                                                                                gamesPlayed(
+                                                                                                        gamesPlayed) {}
 
 void HangmanGameWithScores::game() {
     UI::beginGame();
     UI::readPlayerName(player);
-
+    Highscore *highscore = Highscore::getInstance(player, 0);
     bool play = true;
     while (play) {
         gamesPlayed.incrementStat(1);
@@ -47,7 +45,7 @@ void HangmanGameWithScores::game() {
                     std::cin.clear();
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
-                if (!AbstractHangman::not_letter(letter)) {
+                if (!HangmanStrategy::not_letter(letter)) {
                     UI::displayMessage("Oops! That is not a valid letter. Try another one!");
                     incorrectGuesses++;
                     UI::displayTries(MAX_TRIES - incorrectGuesses);
@@ -61,7 +59,7 @@ void HangmanGameWithScores::game() {
                 }
 
                 guessedLetters += letter;
-                bool search = AbstractHangman::addLetters(secret, letter, word_to_guess);
+                bool search = HangmanStrategy::addLetters(secret, letter, word_to_guess);
                 if (!search) {
                     incorrectGuesses++;
                     UI::displayMessage("Unfortunately the letter " + std::string(1, letter) +
@@ -77,16 +75,16 @@ void HangmanGameWithScores::game() {
                 UI::displayEnd(true, secret, player);
                 player.incrementScore();
                 std::cout << "Current score: " << player.getScore() << "\n";
-                highscore.displayHighscore();
+                highscore->displayHighscore();
             } else {
                 UI::displayEnd(false, secret, player);
                 std::cout << "Final score: " << player.getScore() << "\n";
-                highscore.displayHighscore();
+                highscore->displayHighscore();
                 break;
             }
         }
         int score = player.getScore();
-        highscore.updateHighscore(player, score);
+        highscore->updateHighscore(player, score);
         std::string answer;
         std::cout << "Do you want to play again? (Y/N): ";
         std::cin >> answer;
