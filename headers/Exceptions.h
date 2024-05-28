@@ -6,17 +6,17 @@
 
 class FileOpenException : public std::runtime_error {
 public:
-    explicit FileOpenException(const std::string& msg);
+    explicit FileOpenException(const std::string &msg);
 };
 
 class EmptyFileException : public std::runtime_error {
 public:
-    explicit EmptyFileException(const std::string& msg);
+    explicit EmptyFileException(const std::string &msg);
 };
 
 class InvalidWordsException : public std::runtime_error {
 public:
-    explicit InvalidWordsException(const std::string& msg);
+    explicit InvalidWordsException(const std::string &msg);
 };
 
 #endif

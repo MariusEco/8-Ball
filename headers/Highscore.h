@@ -8,10 +8,13 @@ class Highscore {
 private:
     Player player;
     int highscore;
+
     Highscore(const Player &player, int highscore);
-    static Highscore* instance;
+
+    static Highscore *instance;
 public:
     Highscore(Highscore &other) = delete;
+
     void operator=(const Highscore &) = delete;
 
     /// \brief Updates the current final score of the player, if said score is higher than the current highscore
@@ -22,7 +25,7 @@ public:
     /// \brief Displays the current highscore
     void displayHighscore() const;
 
-    static Highscore* getInstance(const Player &player, int highscore);
+    static Highscore *getInstance(const Player &player, int highscore);
 };
 
 #endif

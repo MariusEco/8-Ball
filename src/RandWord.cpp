@@ -5,9 +5,8 @@
 std::pair<std::string, std::string> RandWord::getRandomWord() {
     try {
         /// \brief Vector that includes all the files
-//        std::vector<std::string> fileNames = {"sports.txt", "animals.txt", "clothes.txt", "fruits.txt",
-//                                              "home_objects.txt", "jobs.txt", "transport.txt"};
-        std::vector<std::string> fileNames = {"testing.txt"};
+        std::vector<std::string> fileNames = {"sports.txt", "animals.txt", "clothes.txt", "fruits.txt",
+                                              "home_objects.txt", "jobs.txt", "transport.txt"};
 
         std::random_device rd;
         std::mt19937 rng(rd());

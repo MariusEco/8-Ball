@@ -22,9 +22,11 @@ void HangmanGameWithTimer::game() {
         while (true) {
             guessedLetters = "";
             incorrectGuesses = 0;
-            /// \brief The word that we have to guess and the category which it belongs to
+
             std::pair<std::string, std::string> secretAndCategory = RandWord::getRandomWord();
+            /// \brief The word that we have to guess
             std::string secret = secretAndCategory.first;
+            /// \brief The category which the word that we have to guess belongs to
             std::string category = secretAndCategory.second;
             /// \brief A simple terminal display of the word we have to guess
             std::string word_to_guess;

@@ -12,6 +12,7 @@ private:
     /// \brief The value of the statistic
     T statValue;
 public:
+
     GameStatistics(const std::string &name, const T &value) : statName(name), statValue(value) {}
 
     /// \brief Displays the statistic with it's current name and value
